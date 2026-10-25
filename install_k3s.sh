@@ -7,9 +7,6 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "[+] 开始配置 Debian 系统以准备安装 K3s..."
-# 0. 关闭ufw
-echo "关闭ufw"
-systemctl disable --now ufw
 
 # 1. 更新系统并使用 apt 安装基础工具
 echo "[+] 更新软件源并安装基础工具..."
@@ -41,8 +38,7 @@ sysctl --system
 
 # 4. 一键安装 K3s (使用国内加速源)
 echo "[+] 正在安装 K3s..."
-export INSTALL_K3S_MIRROR="cn"
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-installer.sh | sh -
+curl -sfL https://get.k3s.io | sh -
 
 # 5. 循环等待 k3s.yaml 配置文件生成（最多等待 30 秒）
 echo "[+] 等待 K3s 服务启动并生成配置文件..."
